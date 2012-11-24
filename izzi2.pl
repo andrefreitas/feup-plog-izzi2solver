@@ -6,9 +6,10 @@
 %  |_/_____/_____|_|____|
 %
 
+:- use_module(library(clpfd)).
 
 % Pieces database
-% For example: for p1([y,r,g,b]): 
+% Example: for p1([y,r,g,b]): 
 %   yr
 %  yyrr
 % yyyrrr
@@ -73,3 +74,7 @@ connect(Pieces,Connection):-
 	getColor(Piece1,P1ColorIndex,Piece1IndexColor),
 	getColor(Piece2,P2ColorIndex,Piece2IndexColor),
 	Piece1IndexColor=Piece2IndexColor.
+
+% Solve puzzle
+%solvePuzzle(Connections):-
+	

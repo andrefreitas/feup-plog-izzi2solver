@@ -75,6 +75,40 @@ connect(Pieces,Connection):-
 	getColor(Piece2,P2ColorIndex,Piece2IndexColor),
 	Piece1IndexColor=Piece2IndexColor.
 
+
 % Solve puzzle
-%solvePuzzle(Connections):-
+solvePuzzle(Connections):-
+	member([1,A1,B1,C1],Connections),
+	member([2,A2,B2,C2],Connections),
+	member([3,A3,B3,C3],Connections),
+	member([4,A4,B4,C4],Connections), 
+	member([5,A5,B5,C5],Connections),  
+	member([6,A6,B6,C6],Connections),
+	member([7,A7,B7,C7],Connections),
+	member([8,A8,B8,C8],Connections),
+	member([9,A9,B9,C9],Connections),
+	member([10,A10,B10,C10],Connections),
+	member([11,A11,B11,C11],Connections),
+	member([12,A12,B12,C12],Connections),
+
+	PiecesToFind=[A1,A2,A3,A4,A5,A6,A7,A8,A9,A10,A11,A12],
+	ColorIndexes=[B1,B2,B3,B4,B5,B6,B7,B8,B9,B10,B11,B12,C1,C2,C3,C4,C5,C6,C7,C8,C9,C10,C11,C12],
+	domain(ColorIndexes,1,4),
+	domain(PiecesToFind, 1, 12), 
+	A1#\=1,
+	A2#\=2,
+	A3#\=3,
+	A4#\=4,
+	A5#\=5,
+	A6#\=6,
+	A7#\=7,
+	A8#\=8,
+	A9#\=9,
+	A10#\=10,
+	A11#\=11,
+	A12#\=12. 
+
+
+
+
 	

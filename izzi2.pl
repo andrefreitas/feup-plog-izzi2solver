@@ -7,7 +7,7 @@
 %
 
 :- use_module(library(clpfd)).
-
+:- use_module(library(lists)).
 % Pieces database
 % Example: for p1([y,r,g,b]): 
 %   yr
@@ -75,7 +75,6 @@ connect(Pieces,Connection):-
 	getColor(Piece2,P2ColorIndex,Piece2IndexColor),
 	Piece1IndexColor#=Piece2IndexColor.
 
-
 % Solve puzzle
 solvePuzzle(Connections):-
     createPieces(Pieces),
@@ -109,6 +108,7 @@ solvePuzzle(Connections):-
 	A12#\=12,
 	labeling([],PiecesToFind),
 	labeling([],ColorIndexes),
+	unique(Connections),
 	connect(Pieces,[1,A1,B1,C1]),
 	connect(Pieces,[2,A2,B2,C2]),
 	connect(Pieces,[3,A3,B3,C3]),
@@ -121,5 +121,17 @@ solvePuzzle(Connections):-
 	connect(Pieces,[10,A10,B10,C10]),
 	connect(Pieces,[11,A11,B11,C11]),
 	connect(Pieces,[12,A12,B12,C12]).
+
+% Extract element from a list
+unique([]).
+unique(Connections):-
+	Connections=[H|T],
+	delete(Connections, H, WithoutList),
+	% Check that connection is unique in the remainder list
+	H=[A,_,B,_],
+	\+member([A,_,B,_],WithoutList),
+	H=[_,A1,_,B1],
+	\+member([A1,_,B1,_],WithoutList),
+	unique(T).
 
 

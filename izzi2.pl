@@ -108,5 +108,18 @@ solvePuzzle(Connections):-
 	A11#\=11,
 	A12#\=12,
 	labeling([],PiecesToFind),
-	labeling([],ColorIndexes).
+	labeling([],ColorIndexes),
+	connect(Pieces,[1,A1,B1,C1]),
+	connect(Pieces,[2,A2,B2,C2]),
+	connect(Pieces,[3,A3,B3,C3]),
+	connect(Pieces,[4,A4,B4,C4]),
+	connect(Pieces,[5,A5,B5,C5]),
+	connect(Pieces,[6,A6,B6,C6]),
+	connect(Pieces,[7,A7,B7,C7]),
+	connect(Pieces,[8,A8,B8,C8]),
+	connect(Pieces,[9,A9,B9,C9]),
+	connect(Pieces,[10,A10,B10,C10]),
+	connect(Pieces,[11,A11,B11,C11]),
+	connect(Pieces,[12,A12,B12,C12]).
+
 

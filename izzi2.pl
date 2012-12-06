@@ -78,19 +78,20 @@ connect(Pieces,Connection):-
 % Extract element from a list
 unique([]).
 unique(Connections):-
-	Connections=[H|T],
+	Connections=[Connection|T],
 	delete(Connections, H, WithoutList),
-	% Check that connection is unique in the remainder list
-	write(H),
-	write(WithoutList),
-	write("----\n"),
-	H=[A,_,B,_],
-	\+member([A,_,B,_],WithoutList),
-	H=[_,A1,_,B1],
-	\+member([A1,_,B1,_],WithoutList),
-	H=[A2,B2,_,_],
-	\+member([B2,A2,_,_],WithoutList),
+	connectionUnique(Connection,WithoutList),
 	unique(T).
+
+% Check if with existing connections can create a connection
+connectionUnique(Connection,Connections):-
+	Connection=[P1,P2,I1,I2],
+	\+member([_,P2,_,I2],Connections),
+	\+member([P2,_,I2,_],Connections),
+	\+member([P1,P2,_,_],Connections),
+	\+member([P2,P1,_,_],Connections),
+	\+member([_,P1,_,I1],Connections),
+	\+member([P1,_,I1,_],Connections).
 
 
 solve(Connections,2):-
@@ -114,6 +115,6 @@ solve(Connections,NPiece):-
 
 	% Indutive
 	solve(ConnectionsP,NPrev),
-	append([Connection],ConnectionsP,Connections),
-	unique(Connections).
+	connectionUnique(Connection,ConnectionsP),
+	append([Connection],ConnectionsP,Connections).
 

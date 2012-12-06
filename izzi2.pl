@@ -102,6 +102,7 @@ solve(Connections,2):-
 
 
 solve(Connections,NPiece):-
+	createPieces(Puzzle),
 	NPiece>2,
 	Connection=[NPiece,Piece,I1,I2],
 	Pieces=[Piece],
@@ -115,6 +116,7 @@ solve(Connections,NPiece):-
 
 	% Indutive
 	solve(ConnectionsP,NPrev),
+	connect(Puzzle,Connection),
 	connectionUnique(Connection,ConnectionsP),
 	append([Connection],ConnectionsP,Connections).
 

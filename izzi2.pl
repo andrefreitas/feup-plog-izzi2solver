@@ -73,54 +73,7 @@ connect(Pieces,Connection):-
 	getPiece(Pieces,Piece2Index,Piece2),
 	getColor(Piece1,P1ColorIndex,Piece1IndexColor),
 	getColor(Piece2,P2ColorIndex,Piece2IndexColor),
-	Piece1IndexColor#=Piece2IndexColor.
-
-% Solve puzzle
-solvePuzzle(Connections):-
-    createPieces(Pieces),
-	member([1,A1,B1,C1],Connections),
-	member([2,A2,B2,C2],Connections),
-	member([3,A3,B3,C3],Connections),
-	member([4,A4,B4,C4],Connections),
-	member([5,A5,B5,C5],Connections),  
-	member([6,A6,B6,C6],Connections),
-	member([7,A7,B7,C7],Connections),
-	member([8,A8,B8,C8],Connections),
-	member([9,A9,B9,C9],Connections),
-	member([10,A10,B10,C10],Connections),
-	member([11,A11,B11,C11],Connections),
-	member([12,A12,B12,C12],Connections),
-	PiecesToFind=[A1,A2,A3,A4,A5,A6,A7,A8,A9,A10,A11,A12],
-	ColorIndexes=[B1,B2,B3,B4,B5,B6,B7,B8,B9,B10,B11,B12,C1,C2,C3,C4,C5,C6,C7,C8,C9,C10,C11,C12],
-	domain(ColorIndexes,1,4),
-	domain(PiecesToFind, 1, 12), 
-	A1#\=1,
-	A2#\=2,
-	A3#\=3,
-	A4#\=4,
-	A5#\=5,
-	A6#\=6,
-	A7#\=7,
-	A8#\=8,
-	A9#\=9,
-	A10#\=10,
-	A11#\=11,
-	A12#\=12,
-	labeling([],PiecesToFind),
-	labeling([],ColorIndexes),
-	unique(Connections),
-	connect(Pieces,[1,A1,B1,C1]),
-	connect(Pieces,[2,A2,B2,C2]),
-	connect(Pieces,[3,A3,B3,C3]),
-	connect(Pieces,[4,A4,B4,C4]),
-	connect(Pieces,[5,A5,B5,C5]),
-	connect(Pieces,[6,A6,B6,C6]),
-	connect(Pieces,[7,A7,B7,C7]),
-	connect(Pieces,[8,A8,B8,C8]),
-	connect(Pieces,[9,A9,B9,C9]),
-	connect(Pieces,[10,A10,B10,C10]),
-	connect(Pieces,[11,A11,B11,C11]),
-	connect(Pieces,[12,A12,B12,C12]).
+	Piece1IndexColor=Piece2IndexColor.
 
 % Extract element from a list
 unique([]).
@@ -128,10 +81,39 @@ unique(Connections):-
 	Connections=[H|T],
 	delete(Connections, H, WithoutList),
 	% Check that connection is unique in the remainder list
+	write(H),
+	write(WithoutList),
+	write("----\n"),
 	H=[A,_,B,_],
 	\+member([A,_,B,_],WithoutList),
 	H=[_,A1,_,B1],
 	\+member([A1,_,B1,_],WithoutList),
+	H=[A2,B2,_,_],
+	\+member([B2,A2,_,_],WithoutList),
 	unique(T).
 
+
+solve(Connections,2):-
+	Connections=[[1,2,I1,I2]],
+	Indexes=[I1,I2],
+	domain(Indexes,1,4),
+	labeling([],Indexes).
+
+
+solve(Connections,NPiece):-
+	NPiece>2,
+	Connection=[NPiece,Piece,I1,I2],
+	Pieces=[Piece],
+	Indexes=[I1,I2],
+
+	domain(Indexes,1,4),
+	NPrev is NPiece -1,
+	domain(Pieces,1,NPrev),
+	labeling([],Indexes),
+	labeling([],Pieces),
+
+	% Indutive
+	solve(ConnectionsP,NPrev),
+	append([Connection],ConnectionsP,Connections),
+	unique(Connections).
 

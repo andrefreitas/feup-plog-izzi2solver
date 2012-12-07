@@ -95,10 +95,13 @@ connectionUnique(Connection,Connections):-
 
 
 solve(Connections,2):-
-	Connections=[[1,2,I1,I2]],
+	createPieces(Puzzle),
+	Connection=[1,2,I1,I2],
+	Connections=[Connection],
 	Indexes=[I1,I2],
 	domain(Indexes,1,4),
-	labeling([],Indexes).
+	labeling([],Indexes),
+	connect(Puzzle,Connection).
 
 
 solve(Connections,NPiece):-

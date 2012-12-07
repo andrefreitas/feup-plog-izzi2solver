@@ -79,7 +79,7 @@ connect(Pieces,Connection):-
 unique([]).
 unique(Connections):-
 	Connections=[Connection|T],
-	delete(Connections, H, WithoutList),
+	delete(Connections, _, WithoutList),
 	connectionUnique(Connection,WithoutList),
 	unique(T).
 
@@ -123,3 +123,21 @@ solve(Connections,NPiece):-
 	connectionUnique(Connection,ConnectionsP),
 	append([Connection],ConnectionsP,Connections).
 
+%write vertical piece
+printVPiece(P):-
+	printPiece(P).
+printPiece(P):-
+	getColor(P,1,C1),
+	getColor(P,2,C2),
+	getColor(P,3,C3),
+	getColor(P,4,C4),
+	write('  '),write(C1),write(C2),nl,
+	write(' '),write(C1),write(C1),write(C2),write(C2),nl,
+	write(C1),write(C1),write(C1),write(C2),write(C2),write(C2),nl,
+	write(C3),write(C3),write(C3),write(C4),write(C4),write(C4),nl,
+	write(' '),write(C3),write(C3),write(C4),write(C4),nl,
+	write('  '),write(C3),write(C4).
+		
+
+
+	

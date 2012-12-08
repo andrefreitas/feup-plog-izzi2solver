@@ -141,12 +141,51 @@ printPiece(P):-
 		
 
 
-shape15(Connection):-
+shape15(Connections):-
+        createPieces(Pieces),
+        C1=[P1,P2,C1I1,C1I2],
+        C2=[P2,P3,C2I1,C2I2],
+        Connections=[C1,C2],
+
+        connect(Pieces,C1),
+        connect(Pieces,C2),
+        domain([P1,P2,P3],1,12),
+        domain([C1I1,C1I2,C2I1,C2I2],1,4),
+        Sol=[P1,P2,P3,C1I1,C1I2,C2I1,C2I2],
+        labeling([],Sol).
+
+shape3(Connections):-
 	createPieces(Pieces),
-	Connections=[P1,P2,L1,L2],
-	connect(Pieces,Connection),
-	domain([P1,P2],1,12),
-	domain([L1,L2],1,4),
-	labeling([],[P1,P2,L1,L2]).
+	Connections=[C1,C2],
+
+	C1=[P1,P2,C1I1,C1I2],
+	C2=[P2,P4,C2I1,C2I2],
+
+	connect(Pieces,C1),
+	connect(Pieces,C2),
+
+	domain([P1,P2,P4],1,12),
+	all_different([P1,P2,P4]),
+	unique(Connections),
+	domain([C1I1,C1I2,C2I1,C2I2],1,4),
+	Sol=[P1,P2,P4,C1I1,C1I2,C2I1,C2I2],
+	labeling([],Sol).
 
 
+shapeaa(Connections):-
+	createPieces(Pieces),
+	Connections=[C1,C2],
+
+	C1=[P1,P2,C1I1,C1I2],
+	C2=[P2,P4,C2I1,C2I2],
+
+	connect(Pieces,C1),
+	connect(Pieces,C2),
+
+	domain([P1,P2,P4],1,12),
+	domain([C1I1,C1I2,C2I1,C2I2],1,4),
+
+	all_different([P1,P2,P4]),
+	unique(Connections),
+	Sol=[P1,P2,P4,C1I1,C1I2,C2I1,C2I2],
+	labeling([],Sol).

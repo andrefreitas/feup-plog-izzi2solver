@@ -140,22 +140,33 @@ printPiece(P):-
 	write('  '),write(C3),write(C4).
 
 % Connection types
-connectionSlashLeft(Connection):-
-	Connection=[_,_,I1,I2],
+connectionSlashLeftTop(Connection):-
+	Connection=[_,_,I1,I2,O1,O2],
 	(
 		(I1#=4, I2#=1);
-		(I1#=1, I2#=4);
-		(I1#=1, I2#=1);
 		(I1#=4, I2#=4)
 	).
 
-connectionSlashRight(Connection):-
+connectionSlashLeftBot(Connection):-
+	Connection=[_,_,I1,I2],
+	(
+		(I1#=1, I2#=4);
+		(I1#=1, I2#=1)
+	).
+
+
+connectionSlashRightTop(Connection):-
 	Connection=[_,_,I1,I2],
 	(
 		(I1#=3, I2#=2);
-		(I1#=2, I2#=3);
-		(I1#=2, I2#=2);
 		(I1#=3, I2#=3)
+	).
+
+connectionSlashRightBot(Connection):-
+	Connection=[_,_,I1,I2],
+	(
+		(I1#=2, I2#=3);
+		(I1#=2, I2#=2)
 	).
 
 shapeSimple(Connections):-
@@ -167,10 +178,10 @@ shapeSimple(Connections):-
 	C3=[P3,P4,C3I1,C3I2],
 	C4=[P2,P4,C4I1,C4I2],
 
-	connectionSlashRight(C1),
-	connectionSlashLeft(C2),
-	connectionSlashRight(C3),
-	connectionSlashLeft(C4),
+	connectionSlashRightTop(C1),
+	connectionSlashLeftTop(C2),
+	connectionSlashRightTop(C3),
+	connectionSlashLeftTop(C4),
 
 	connect(Pieces,C1),
 	connect(Pieces,C2),

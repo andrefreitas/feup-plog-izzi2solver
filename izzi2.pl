@@ -69,6 +69,7 @@ getPiece(Pieces,Index,Piece):-
 % Connection
 connect(Pieces,Connection):-
 	Connection=[Piece1Index,Piece2Index,P1ColorIndex,P2ColorIndex],
+	Piece1Index#\=Piece2Index,
 	getPiece(Pieces,Piece1Index,Piece1),
 	getPiece(Pieces,Piece2Index,Piece2),
 	getColor(Piece1,P1ColorIndex,Piece1IndexColor),
@@ -140,13 +141,12 @@ printPiece(P):-
 		
 
 
-teste(Connection):-
+shape15(Connection):-
 	createPieces(Pieces),
-	Connection=[P1,P2,L1,L2],
+	Connections=[P1,P2,L1,L2],
 	connect(Pieces,Connection),
 	domain([P1,P2],1,12),
 	domain([L1,L2],1,4),
-	all_different([P1,P2]),
 	labeling([],[P1,P2,L1,L2]).
 
 

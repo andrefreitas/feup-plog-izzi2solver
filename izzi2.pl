@@ -68,7 +68,7 @@ getPiece(Pieces,Index,Piece):-
 
 % Connection
 connect(Pieces,Connection):-
-	Connection=[Piece1Index,Piece2Index,P1ColorIndex,P2ColorIndex],
+	Connection=[Piece1Index,Piece2Index,P1ColorIndex,P2ColorIndex,_,_],
 	Piece1Index#\=Piece2Index,
 	getPiece(Pieces,Piece1Index,Piece1),
 	getPiece(Pieces,Piece2Index,Piece2),
@@ -86,43 +86,13 @@ unique(Connections):-
 
 % Check if with existing connections can create a connection
 connectionUnique(Connection,Connections):-
-	Connection=[P1,P2,I1,I2],
-	\+member([_,P2,_,I2],Connections),
-	\+member([P2,_,I2,_],Connections),
-	\+member([P1,P2,_,_],Connections),
-	\+member([P2,P1,_,_],Connections),
-	\+member([_,P1,_,I1],Connections),
-	\+member([P1,_,I1,_],Connections).
-
-
-solve(Connections,2):-
-	createPieces(Puzzle),
-	Connection=[1,2,I1,I2],
-	Connections=[Connection],
-	Indexes=[I1,I2],
-	domain(Indexes,1,4),
-	labeling([],Indexes),
-	connect(Puzzle,Connection).
-
-
-solve(Connections,NPiece):-
-	createPieces(Puzzle),
-	NPiece>2,
-	Connection=[NPiece,Piece,I1,I2],
-	Pieces=[Piece],
-	Indexes=[I1,I2],
-
-	domain(Indexes,1,4),
-	NPrev is NPiece -1,
-	domain(Pieces,1,NPrev),
-	labeling([],Indexes),
-	labeling([],Pieces),
-
-	% Indutive
-	solve(ConnectionsP,NPrev),
-	connect(Puzzle,Connection),
-	connectionUnique(Connection,ConnectionsP),
-	append([Connection],ConnectionsP,Connections).
+	Connection=[P1,P2,I1,I2,_,_],
+	\+member([_,P2,_,I2,_,_],Connections),
+	\+member([P2,_,I2,_,_,_],Connections),
+	\+member([P1,P2,_,_,_,_],Connections),
+	\+member([P2,P1,_,_,_,_],Connections),
+	\+member([_,P1,_,I1,_,_],Connections),
+	\+member([P1,_,I1,_,_,_],Connections).
 
 %write vertical piece
 printVPiece(P):-
@@ -140,48 +110,38 @@ printPiece(P):-
 	write('  '),write(C3),write(C4).
 
 % Connection types
-connectionSlashLeftTop(Connection):-
+connectionSlashLeft(Connection):-
 	Connection=[_,_,I1,I2,O1,O2],
 	(
-		(I1#=4, I2#=1);
-		(I1#=4, I2#=4)
-	).
-
-connectionSlashLeftBot(Connection):-
-	Connection=[_,_,I1,I2],
-	(
-		(I1#=1, I2#=4);
-		(I1#=1, I2#=1)
+		(I1#=4, I2#=1, O1#=0,O2#=0);
+		(I1#=4, I2#=4, O1#=0,O2#=1);
+		(I1#=1, I2#=4, O1#=1,O2#=1);
+		(I1#=1, I2#=1, O1#=1,O2#=0)
 	).
 
 
-connectionSlashRightTop(Connection):-
-	Connection=[_,_,I1,I2],
+connectionSlashRight(Connection):-
+	Connection=[_,_,I1,I2,O1,O2],
 	(
-		(I1#=3, I2#=2);
-		(I1#=3, I2#=3)
-	).
-
-connectionSlashRightBot(Connection):-
-	Connection=[_,_,I1,I2],
-	(
-		(I1#=2, I2#=3);
-		(I1#=2, I2#=2)
+		(I1#=3, I2#=2, O1#=0,O2#=0);
+		(I1#=3, I2#=3, O1#=0,O2#=1);
+		(I1#=2, I2#=3, O1#=1,O2#=1);
+		(I1#=2, I2#=2,  O1#=1,O2#=0)
 	).
 
 shapeSimple(Connections):-
 	createPieces(Pieces),
 	Connections=[C1,C2,C3,C4],
 
-	C1=[P1,P2,C1I1,C1I2],
-	C2=[P1,P3,C2I1,C2I2],
-	C3=[P3,P4,C3I1,C3I2],
-	C4=[P2,P4,C4I1,C4I2],
+	C1=[P1,P2,C1I1,C1I2,0,0],
+	C2=[P1,P3,C2I1,C2I2,0,1],
+	C3=[P3,P4,C3I1,C3I2,1,0],
+	C4=[P2,P4,C4I1,C4I2,0,0],
 
-	connectionSlashRightTop(C1),
-	connectionSlashLeftTop(C2),
-	connectionSlashRightTop(C3),
-	connectionSlashLeftTop(C4),
+	connectionSlashRight(C1),
+	connectionSlashLeft(C2),
+	connectionSlashRight(C3),
+	connectionSlashLeft(C4),
 
 	connect(Pieces,C1),
 	connect(Pieces,C2),
@@ -190,6 +150,7 @@ shapeSimple(Connections):-
 
 	domain([P1,P2,P3,P4],1,12),
 	domain([C1I1,C1I2,C2I1,C2I2,C3I1,C3I2,C4I1,C4I2],1,4),
+	%domain([C1O1,C1O2,C2O1,C2O2,C3O1,C3O2,C4O1,C4O2],0,1),
 
 	all_different([P1,P2,P3,P4]),
 	unique(Connections),

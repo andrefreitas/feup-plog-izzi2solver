@@ -35,17 +35,17 @@ p12([y,b,g,r]).
 getColor(Piece,Index,Color):-
 	Piece=[C1,C2,C3,C4],
 	(
-		Index=1,
-		Color=C1;
+		Index#=1,
+		Color#=C1;
 
-		Index=2,
-		Color=C2;
+		Index#=2,
+		Color#=C2;
 
-		Index=3,
-		Color=C3;
+		Index#=3,
+		Color#=C3;
 
-		Index=4,
-		Color=C4
+		Index#=4,
+		Color#=C4
 
 	).
 
@@ -57,12 +57,12 @@ createPieces(Pieces):-
 % Get Piece from piece list
 getPiece(Pieces,Index,Piece):-
 	Pieces=[H|_],
-	Index=1,
+	Index#=1,
 	Piece=H.
 
 getPiece(Pieces,Index,Piece):-
-	Index>1,
-	NewIndex is Index-1,
+	Index#>1,
+	NewIndex#= Index-1,
 	Pieces=[_|T],
 	getPiece(T,NewIndex,Piece).
 
@@ -73,7 +73,7 @@ connect(Pieces,Connection):-
 	getPiece(Pieces,Piece2Index,Piece2),
 	getColor(Piece1,P1ColorIndex,Piece1IndexColor),
 	getColor(Piece2,P2ColorIndex,Piece2IndexColor),
-	Piece1IndexColor=Piece2IndexColor.
+	Piece1IndexColor#=Piece2IndexColor.
 
 % Extract element from a list
 unique([]).
@@ -140,4 +140,13 @@ printPiece(P):-
 		
 
 
-	
+teste(Connection):-
+	createPieces(Pieces),
+	Connection=[P1,P2,L1,L2],
+	connect(Pieces,Connection),
+	domain([P1,P2],1,12),
+	domain([L1,L2],1,4),
+	all_different([P1,P2]),
+	labeling([],[P1,P2,L1,L2]).
+
+

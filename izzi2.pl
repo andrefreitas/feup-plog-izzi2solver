@@ -133,10 +133,10 @@ shapeSimple(Connections):-
 	createPieces(Pieces),
 	Connections=[C1,C2,C3,C4],
 
-	C1=[P1,P2,C1I1,C1I2,0,0],
-	C2=[P1,P3,C2I1,C2I2,0,1],
-	C3=[P3,P4,C3I1,C3I2,1,0],
-	C4=[P2,P4,C4I1,C4I2,0,0],
+	C1=[P1,P2,C1I1,C1I2,O1,O2],
+	C2=[P1,P3,C2I1,C2I2,O1,O3],
+	C3=[P3,P4,C3I1,C3I2,O3,O4],
+	C4=[P2,P4,C4I1,C4I2,O2,O4],
 
 	connectionSlashRight(C1),
 	connectionSlashLeft(C2),
@@ -150,9 +150,9 @@ shapeSimple(Connections):-
 
 	domain([P1,P2,P3,P4],1,12),
 	domain([C1I1,C1I2,C2I1,C2I2,C3I1,C3I2,C4I1,C4I2],1,4),
-	%domain([C1O1,C1O2,C2O1,C2O2,C3O1,C3O2,C4O1,C4O2],0,1),
+	domain([O1,O2,O3,O4],0,1),
 
 	all_different([P1,P2,P3,P4]),
 	unique(Connections),
-	Sol=[P1,P2,P3,P4,C1I1,C1I2,C2I1,C2I2,C3I1,C3I2,C4I1,C4I2],
+	Sol=[P1,P2,P3,P4,C1I1,C1I2,C2I1,C2I2,C3I1,C3I2,C4I1,C4I2,O1,O2,O3,O4],
 	labeling([],Sol).

@@ -21,7 +21,7 @@ printPiece(P):-
 
 
 izzi2 :-
-	write('Escolha uma shape:'),nl,
+	write('Choose one option:'),nl,
 	write('0 - LIST PEICES'),nl,
 	write('1 - Shape 1'),nl,
 	write('2 - Shape Simple Slash'),nl,

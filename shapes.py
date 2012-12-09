@@ -38,4 +38,3 @@ createCode([
 	[2,4,"SR"],
 	[3,4,"CR"]
 	],"4Corners","izzi2Puzzles")
-

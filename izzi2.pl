@@ -93,21 +93,6 @@ connectionUnique(Connection,Connections):-
 	\+member([_,P1,_,I1,_,_],Connections),
 	\+member([P1,_,I1,_,_,_],Connections).
 
-%write vertical piece
-printVPiece(P):-
-	printPiece(P).
-printPiece(P):-
-	getColor(P,1,C1),
-	getColor(P,2,C2),
-	getColor(P,3,C3),
-	getColor(P,4,C4),
-	write('   '),write(C1),write(C2),nl,
-	write('1 '),write(C1),write(C1),write(C2),write(C2),write(' 2'),nl,
-	write(' '),write(C1),write(C1),write(C1),write(C2),write(C2),write(C2),nl,
-	write(' '),write(C3),write(C3),write(C3),write(C4),write(C4),write(C4),nl,
-	write('3 '),write(C3),write(C3),write(C4),write(C4),write(' 4'),nl,
-	write('   '),write(C3),write(C4),nl.
-
 % Connection types
 connectionSlashLeft(Connection):-
 	Connection=[_,_,I1,I2,O1,O2],

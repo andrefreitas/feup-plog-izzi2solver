@@ -1,5 +1,5 @@
-def createCode(connections,shape):
-    fo = open("codigo.txt", "w")
+def createCode(connections,shape,filename):
+    fo = open(filename+".pl", "a")
     fo.write("shape"+str(shape)+"(Connections):-\n")
     fo.write("\tcreatePieces(Pieces),\n")
     
@@ -27,7 +27,7 @@ def createCode(connections,shape):
             fo.write("\tconnectionSlashRight(C"+istr+"),\n")
         if(top=="SL"):
             fo.write("\tconnectionSlashLeft(C"+istr+"),\n")
-         if(top=="CR"):
+        if(top=="CR"):
             fo.write("\tconnectionCorner(C"+istr+"),\n")
 
     #Write connnect

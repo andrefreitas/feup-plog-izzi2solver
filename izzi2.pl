@@ -138,7 +138,7 @@ connectionCorner(Connection):-
 		(I1#=3, I2#=4, O1#=1,O2#=0)
 	).
 
-shapeSimpleShash(Connections):-
+shapeSimpleSlash(Connections):-
 	createPieces(Pieces),
 	Connections=[C1,C2,C3,C4],
 

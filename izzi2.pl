@@ -30,7 +30,6 @@ p10([b,r,g,y]).
 p11([y,b,r,g]).
 p12([y,b,g,r]).
 
-
 % Get piece color
 getColor(Piece,Index,Color):-
 	Piece=[C1,C2,C3,C4],

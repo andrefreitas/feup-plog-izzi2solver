@@ -27,6 +27,8 @@ def createCode(connections,shape):
             fo.write("\tconnectionSlashRight(C"+istr+"),\n")
         if(top=="SL"):
             fo.write("\tconnectionSlashLeft(C"+istr+"),\n")
+         if(top=="CR"):
+            fo.write("\tconnectionCorner(C"+istr+"),\n")
 
     #Write connnect
     fo.write("\n")
